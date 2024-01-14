@@ -9,20 +9,20 @@ public class Main {
 		String input; // 사용자 입력
 
 
-		Info s = new Customer("smlim", "smlim123");
+		Customer s = new Customer();
 
-		if(s.check()){
-			s.print();
-		}
+		s.check();
+		s.print();
 
-		Info w = new Shop("핸드폰");
+
+		Shop w = new Shop();
 		w.check();
 		w.print();
 	}
 }
 
 interface Info {
-	boolean check();
+	String check();
 	void print();
 }
 
@@ -31,13 +31,14 @@ class Customer implements Info{
 	String id;
 	String pwd;
 
-	Customer(String id, String pwd){
-		this.id = id;
-		this.pwd = pwd;
-	}
+//	Customer(String id, String pwd){
+//		this.id = id;
+//		this.pwd = pwd;
+//	}
 	
 	@Override
-	public boolean check(){
+	public String check() {
+		String return_id;
 		String[] customer_id = {"smlim", "jbkim"};
 		String[] customer_pwd = {"smlim123", "jbkim123"};
 		Scanner sc = new Scanner(System.in);
@@ -46,59 +47,51 @@ class Customer implements Info{
 		System.out.print("비밀번호를 입력하세요:");
 		String input_pwd = sc.nextLine();
 
-		for(int i=0; i<customer_id.length; i++){
-			if(input_id.equals(customer_id[i])){
-				if(input_pwd.equals(customer_pwd[i])){
+		for (int i = 0; i < customer_id.length; i++) {
+			if (input_id.equals(customer_id[i])) {
+				if (input_pwd.equals(customer_pwd[i])) {
 					System.out.println("로그인되었습니다.");
-					return true;
 				}
-				else{
-					System.out.println("아이디와 비밀번호가 일치하지 않습니다.");
-					return false;
-				}
-			}
+				return customer_id[i];
+            }
 		}
-		return false;
+		return "아이디와 비밀번호가 일치하지 않습니다.";
 	}
-	
+
 	@Override
 	public void print(){
-		System.out.println("로그인한 아이디:"+this.id);
-		System.out.println();
+//		System.out.println("로그인한 아이디:"+check());
 	}
 	
 }
 
 class Shop implements Info{
-	String shopping_list;
-
-	Shop(String shopping_list){
-		this.shopping_list = shopping_list;
-	}
+//	String[] item_list = {"핸드폰", "충전기", "청소기", "휴지"};
 	
-	public boolean check(){
+	public String check(){
+		String return_item;
 		String[] item_list = {"핸드폰", "충전기", "청소기", "휴지"};
 		int[] item_price = {100000, 30000, 150000, 5000};
 		Scanner sc = new Scanner(System.in);
-		System.out.print("구매할 물건을 입력합니다.");
+		System.out.println("구매할 물건을 입력합니다.");
+		System.out.print("구매 가능한 물품 : [핸드폰, 충전기, 청소기, 휴지]");
 		String item = sc.nextLine();
 
 		for(int i=0; i<item_list.length; i++){
 			if(item.equals(item_list[i])){
 				System.out.println("구매가 완료되었습니다.");
 				System.out.print(item+"의 가격은 "+item_price[i]+"원 입니다.");
+				return_item = item_list[i];
+				return return_item;
 			}
 		}
-		return true;
+		return "구매에 실패했습니다.";
 	}
-	
+
 	public void print(){
-		System.out.println("물품명: "+this.shopping_list);
+//		System.out.print("물품명: "+check());
 	}
 }
-
-
-
 
 
 
